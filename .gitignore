@@ -5,4 +5,5 @@
 /target/
 **/*.rs.bk
 
+/docs/
 .env
