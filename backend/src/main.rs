@@ -1,26 +1,42 @@
+mod util;
 mod gql;
 mod dbs;
 mod users;
 
 use actix_web::{guard, web, App, HttpServer};
 
+use crate::util::constant::CFG;
 use crate::gql::{build_schema, graphql, graphiql};
 
-#[actix_rt::main]
+#[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let schema = build_schema().await;
 
-    println!("GraphQL UI: http://127.0.0.1:8080");
+    println!(
+        "GraphQL UI: http://{}:{}",
+        CFG.get("ADDRESS").unwrap(),
+        CFG.get("PORT").unwrap()
+    );
 
     HttpServer::new(move || {
         App::new()
             .data(schema.clone())
-            .service(web::resource("/graphql").guard(guard::Post()).to(graphql))
             .service(
-                web::resource("/graphiql").guard(guard::Get()).to(graphiql),
+                web::resource(CFG.get("GQL_VER").unwrap())
+                    .guard(guard::Post())
+                    .to(graphql),
+            )
+            .service(
+                web::resource(CFG.get("GIQL_VER").unwrap())
+                    .guard(guard::Get())
+                    .to(graphiql),
             )
     })
-    .bind("127.0.0.1:8080")?
+    .bind(format!(
+        "{}:{}",
+        CFG.get("ADDRESS").unwrap(),
+        CFG.get("PORT").unwrap()
+    ))?
     .run()
     .await
 }

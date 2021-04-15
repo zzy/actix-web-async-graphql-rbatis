@@ -1,8 +1,7 @@
 use rbatis::core::db::DBPoolOptions;
 use rbatis::rbatis::Rbatis;
 
-pub const MYSQL_URL: &'static str =
-    "mysql://root:mysql@localhost:3306/budshome";
+use crate::util::constant::CFG;
 
 pub async fn my_pool() -> Rbatis {
     let rb = Rbatis::new();
@@ -10,7 +9,7 @@ pub async fn my_pool() -> Rbatis {
     let mut opts = DBPoolOptions::new();
     opts.max_connections = 100;
 
-    rb.link_opt(MYSQL_URL, &opts).await.unwrap();
+    rb.link_opt(CFG.get("MYSQL_URI").unwrap(), &opts).await.unwrap();
 
     rb
 }

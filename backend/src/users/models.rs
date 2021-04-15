@@ -1,7 +1,8 @@
 use serde::{Serialize, Deserialize};
 
 #[rbatis::crud_enable]
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(async_graphql::SimpleObject, Serialize, Deserialize, Clone, Debug)]
+#[graphql(complex)]
 pub struct User {
     pub id: i32,
     pub email: String,
@@ -9,17 +10,15 @@ pub struct User {
     pub cred: String,
 }
 
-#[async_graphql::Object]
+#[async_graphql::ComplexObject]
 impl User {
-    pub async fn id(&self) -> i32 {
-        self.id
-    }
+    pub async fn from(&self) -> String {
+        let mut from = String::new();
+        from.push_str(&self.username);
+        from.push_str("<");
+        from.push_str(&self.email);
+        from.push_str(">");
 
-    pub async fn email(&self) -> &str {
-        self.email.as_str()
-    }
-
-    pub async fn username(&self) -> &str {
-        self.username.as_str()
+        from
     }
 }

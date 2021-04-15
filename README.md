@@ -1,6 +1,6 @@
-# actix-web-async-graphql
+# actix-web-async-graphql-rbatis
 
-Clean boilerplate for graphql services using actix-web, rhai, async-graphql, surf, graphql-client, handlebars-rust, jsonwebtoken, and mysql / postgresql. 
+Clean boilerplate for graphql services using actix-web, rhai, async-graphql, surf, rbatis, graphql-client, handlebars-rust, jsonwebtoken, and mysql / postgresql. 
 
 See also: [tide-async-graphql-mongodb](https://github.com/zzy/tide-async-graphql-mongodb)
 
