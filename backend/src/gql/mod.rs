@@ -3,16 +3,16 @@ pub mod queries;
 
 use actix_web::{web, HttpResponse, Result};
 use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
-use async_graphql::{EmptyMutation, EmptySubscription, Schema};
+use async_graphql::{EmptySubscription, Schema};
 use async_graphql_actix_web::{Request, Response};
 
 use crate::util::constant::CFG;
 use crate::dbs::mysql::my_pool;
-use crate::gql::queries::QueryRoot;
+use crate::gql::{queries::QueryRoot, mutations::MutationRoot};
 
 type ActixSchema = Schema<
     queries::QueryRoot,
-    async_graphql::EmptyMutation,
+    mutations::MutationRoot,
     async_graphql::EmptySubscription,
 >;
 
@@ -25,7 +25,7 @@ pub async fn build_schema() -> ActixSchema {
 
     // The root object for the query and Mutatio, and use EmptySubscription.
     // Add global mysql pool  in the schema object.
-    Schema::build(QueryRoot, EmptyMutation, EmptySubscription)
+    Schema::build(QueryRoot, MutationRoot, EmptySubscription)
         .data(my_pool)
         .finish()
 }

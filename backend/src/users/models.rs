@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-#[rbatis::crud_enable]
+#[rbatis::crud_enable(table_name:"users")]
 #[derive(async_graphql::SimpleObject, Serialize, Deserialize, Clone, Debug)]
 #[graphql(complex)]
 pub struct User {
@@ -21,4 +21,15 @@ impl User {
 
         from
     }
+}
+
+#[rbatis::crud_enable(table_name:"users")]
+#[derive(async_graphql::InputObject, Serialize, Deserialize, Clone, Debug)]
+pub struct NewUser {
+    #[graphql(skip)]
+    pub id: i32,
+    pub email: String,
+    pub username: String,
+    #[graphql(skip)]
+    pub cred: String,
 }
