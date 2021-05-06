@@ -13,8 +13,8 @@ dotenv = "0.15.0"
 lazy_static = "1.4.0"
 
 
-async-graphql = { version = "2.8.2", features = ["chrono"] }
-async-graphql-actix-web = "2.8.2"
-rbatis = { version = "1.8.83", default-features = false, features = ["mysql", "postgres"] }
+async-graphql = { version = "2.8.4", features = ["chrono"] }
+async-graphql-actix-web = "2.8.4"
+rbatis = { version = "1.8.84", default-features = false, features = ["mysql", "postgres"] }
 
-serde = { version = "1.0", features = ["derive"] }
+serde = { version = "1.0.125", features = ["derive"] }
